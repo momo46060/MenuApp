@@ -3,8 +3,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp") // Add this line
-
     id("androidx.room") version "2.7.1" apply false
+    id("com.google.dagger.hilt.android")
+    kotlin("kapt")
 
 }
 
@@ -46,17 +47,17 @@ android {
 dependencies {
     val room_version = "2.7.1"
 
-    // Core Room runtime dependency
     implementation("androidx.room:room-runtime:$room_version")
-
-    // Room compiler - use KSP (recommended for Kotlin 2.0+)
     ksp("androidx.room:room-compiler:$room_version")
 
-    // Optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$room_version")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-compiler:2.51.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

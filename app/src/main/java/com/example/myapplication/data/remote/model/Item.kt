@@ -1,5 +1,6 @@
 package com.example.myapplication.data.remote.model
 
+import com.example.myapplication.data.local.entity.MenuItemEntity
 import kotlinx.serialization.Serializable
 
 
@@ -14,4 +15,17 @@ data class Item (
     val rating: Double,
     val image: String,
     val available: Boolean,
+)
+
+fun Item.toEntity(category: String) = MenuItemEntity(
+    id = this.id,
+    name = this.name,
+    price = this.price,
+    description = this.description,
+    vegan = this.vegan,
+    hot = this.hot,
+    rating = this.rating,
+    image = this.image,
+    available = this.available,
+    category = category
 )
