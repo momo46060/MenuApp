@@ -1,8 +1,6 @@
 package com.example.myapplication.data.repository
 
 import android.content.Context
-import android.util.Log
-import androidx.core.view.forEach
 import com.example.myapplication.data.local.MenuDao
 import com.example.myapplication.data.local.entity.MenuItemEntity
 import com.example.myapplication.data.remote.model.Menu

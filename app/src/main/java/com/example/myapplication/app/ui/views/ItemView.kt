@@ -26,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -52,7 +51,6 @@ fun MenuItem(item: MenuItemEntity) {
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column {
-            // Category Header with Gradient Background
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -74,11 +72,8 @@ fun MenuItem(item: MenuItemEntity) {
                     letterSpacing = 1.sp
                 )
             }
-
-            // Main Content
             Column(modifier = Modifier.padding(16.dp)) {
                 Row {
-                    // Image Section with Overlay for Unavailable Items
                     Box {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
@@ -90,10 +85,8 @@ fun MenuItem(item: MenuItemEntity) {
                             modifier = Modifier
                                 .size(100.dp)
                                 .clip(RoundedCornerShape(16.dp))
-                                .shadow(4.dp, RoundedCornerShape(16.dp))
                         )
 
-                        // Unavailable Overlay
                         if (!item.available) {
                             Box(
                                 modifier = Modifier
@@ -115,9 +108,7 @@ fun MenuItem(item: MenuItemEntity) {
 
                     Spacer(modifier = Modifier.width(16.dp))
 
-                    // Content Column
                     Column(modifier = Modifier.weight(1f)) {
-                        // Name and Price Row
                         Row(
                             verticalAlignment = Alignment.Top,
                             modifier = Modifier.fillMaxWidth()
@@ -141,7 +132,6 @@ fun MenuItem(item: MenuItemEntity) {
 
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        // Description
                         Text(
                             text = item.description,
                             fontSize = 14.sp,
@@ -153,12 +143,10 @@ fun MenuItem(item: MenuItemEntity) {
 
                         Spacer(modifier = Modifier.height(12.dp))
 
-                        // Tags Row
                         LazyRow(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            // Rating Badge
                             item {
                                 Surface(
                                     shape = RoundedCornerShape(20.dp),
@@ -186,9 +174,7 @@ fun MenuItem(item: MenuItemEntity) {
                                 }
                             }
 
-                            // Vegan Badge
                             if (item.vegan) {
-
                                 item {
                                     Surface(
                                         shape = RoundedCornerShape(20.dp),
@@ -215,7 +201,6 @@ fun MenuItem(item: MenuItemEntity) {
                                 }
                             }
 
-                            // Hot Badge
                             if (item.hot){
                                 item {
                                     Surface(
@@ -244,7 +229,6 @@ fun MenuItem(item: MenuItemEntity) {
 
                             }
 
-                            // Unavailable Badge
                             if (!item.available) {
                                 item {
                                     Surface(
