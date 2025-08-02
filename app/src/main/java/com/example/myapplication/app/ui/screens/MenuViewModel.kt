@@ -3,7 +3,10 @@ package com.example.myapplication.app.ui.screens
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.data.local.entity.MenuItemEntity
+import com.example.myapplication.data.repository.SettingsRepositoryImpl
 import com.example.myapplication.domain.model.Resource
+import com.example.myapplication.domain.repository.SettingsRepository
+import com.example.myapplication.domain.usecase.AddItemToFavorite
 import com.example.myapplication.domain.usecase.GetMenuUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +21,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyViewModel @Inject constructor(
-    val getMenu: GetMenuUseCase
+   private val getMenu: GetMenuUseCase,
+   private val addItemToFavoriteUseCase: AddItemToFavorite,
+    private val settingsRepository: SettingsRepositoryImpl
+
 ) : ViewModel() {
     private val _menu = MutableStateFlow<Resource<List<MenuItemEntity>>>(Resource.Idle)
     val menu: StateFlow<Resource<List<MenuItemEntity>>> = _menu
@@ -31,6 +37,8 @@ class MyViewModel @Inject constructor(
      val showHotOnly = _showHotOnly
     private val _showAvailableOnly = MutableStateFlow(false)
      val showAvailableOnly = _showAvailableOnly
+    val isDarkMode: StateFlow<Boolean> = settingsRepository.isDarkModeFlow
+        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     val filteredMenu: StateFlow<List<MenuItemEntity>> = combine(
         _menu,
@@ -71,7 +79,19 @@ class MyViewModel @Inject constructor(
     fun setShowVeganOnly() { _showVeganOnly.value = !_showVeganOnly.value }
     fun setShowHotOnly() { _showHotOnly.value = ! _showHotOnly.value }
     fun setShowAvailableOnly() { _showAvailableOnly.value = !_showAvailableOnly.value }
+     fun addItemToFavorite(itemId:String) {
+         viewModelScope.launch(Dispatchers.IO) {
+             addItemToFavoriteUseCase(itemId)
+         }
+    }
+    fun toggleDarkMode() {
+        viewModelScope.launch {
+            settingsRepository.setDarkMode(!(isDarkMode.value))
+        }
+    }
 
-
+    fun setDarkMode(value: Boolean) {
+        viewModelScope.launch { settingsRepository.setDarkMode(value) }
+    }
 
 }
