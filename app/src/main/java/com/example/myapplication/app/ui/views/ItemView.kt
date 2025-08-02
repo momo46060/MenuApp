@@ -188,6 +188,7 @@ fun MenuItem(item: MenuItemEntity) {
 
                             // Vegan Badge
                             if (item.vegan) {
+
                                 item {
                                     Surface(
                                         shape = RoundedCornerShape(20.dp),
