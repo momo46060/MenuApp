@@ -49,5 +49,3 @@ Built using **Kotlin**, **Jetpack Compose**, and **MVVM Clean Architecture**.
 
 ---
 
-## 📂 Project Structure
-
